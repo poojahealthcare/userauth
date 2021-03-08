@@ -1,0 +1,388 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <title>Pooja Healthcare</title>
+    <meta name="description" content=""/>
+    <meta name="viewport" content="width=device-width"/>
+    <base href="/"/>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+    <script>
+    function toggleme(mydivtag) {
+  	  var x = document.getElementById(mydivtag);
+  	  if (x.style.display === "none") {
+  	    x.style.display = "block";
+  	  } else {
+  	    x.style.display = "none";
+  	  }
+  	}
+    
+     function resetPassword(){  
+    	var form = document.forms['resetPasswordForm']; 
+		var data = new FormData(form);  
+		var x = document.getElementById('signup');
+		 x.style.display = "none"; 
+		 x = document.getElementById('perrorMessage');
+		 x.style.display = "none";  
+		var url = "/auth/resetpwd"; 
+		$.ajax({
+			type : "POST",
+			url : url,
+			cache : false,
+			processData : false,
+			contentType : false,
+			data : data,
+			success : function(msg) {  
+				     x= document.getElementById('resetpwd');
+				     x.style.display = "none"; 
+					 x= document.getElementById('psucessMessage'); 
+					 x.style.display = "block"; 
+			},
+			error : function(msg) {
+				alert('failed'+msg.responseJSON.message);
+				
+				 x= document.getElementById('perrorMessage');
+				 console.log('response message='+ x)
+				 x.innerHTML= msg.responseJSON.message;
+			     x.style.display = "block"; 
+				 console.log('response message='+ x.innerHTML)
+				 
+			}
+		});
+		
+    }
+     
+     
+     function loginemail(){ 
+    	 document.getElementById('errorMessage').style.display = "none";
+     	var form = document.forms['loginwithemail'];
+ 		console.log(form);   
+ 		var data = new FormData(form);
+ 		console.dir('formdata=' + data); 
+ 		var url = "/auth/login"; 
+ 		$.ajax({
+ 			type : "POST",
+ 			url : url,
+ 			cache : false,
+ 			processData : false,
+ 			contentType : false,
+ 			data : data,
+ 			success : function(msg) { 
+ 				
+ 				 window.location=$(msg).find('#redirecturlvalue')[0].defaultValue; 
+ 			},
+ 			error : function(msg) {
+ 				document.getElementById('errorMessage').innerHTML="<h4 color='red'>"+msg.responseJSON.message+"</h4>";
+				document.getElementById('errorMessage').style.display = "block";
+				 
+ 				console.dir(msg); 
+ 			}
+ 		});
+ 		
+     }
+     
+    function newuserSingup(){ 
+    	 document.getElementById('serrorMessage').style.display = "none";
+    	var form = document.forms['newuserSingupForm'];
+		console.log(form);   
+		var data = new FormData(form);
+		console.dir('formdata=' + data); 
+		var url = "/auth/signup"; 
+		$.ajax({
+			type : "POST",
+			url : url,
+			cache : false,
+			processData : false,
+			contentType : false,
+			data : data,
+			success : function(msg) {  
+				 
+					 console.log('response message='+msg)
+					 var x = document.getElementById('signup');
+					 x.style.display = "none"; 
+					 x = document.getElementById('emailvalidation');
+					 x.style.display = "block";
+				  
+			},
+			error : function(msg) {
+				alert('f '+msg.responseJSON.message);
+				console.dir(msg); 
+				document.getElementById('serrorMessage').innerHTML="<h6 color='red'>"+msg.responseJSON.message+"</h6>";
+				document.getElementById('serrorMessage').style.display = "block";
+			}
+		});
+		
+    }
+    
+    
+    function toogleReset(){
+    	var x = document.getElementById('signup');
+    	 x.style.display = "none"; 
+    	 x = document.getElementById('login');
+    	 x.style.display = "none"; 
+    	 x = document.getElementById('emailvalidation');
+    	 x.style.display = "none";
+    	 x = document.getElementById('resetpwd');
+    	 x.style.display = "block";
+    	   
+    }
+    
+    
+    function backtoHome(){
+    	var x = document.getElementById('signup');
+    	 x.style.display = "none"; 
+    	 x = document.getElementById('login');
+    	 x.style.display = "block"; 
+    	 x = document.getElementById('emailvalidation');
+    	 x.style.display = "none";
+    	 x = document.getElementById('resetpwd');
+    	 x.style.display = "none";
+    	   
+    }
+    
+    
+    </script>
+<style>
+
+ #login {
+position: absolute; /*or fixed*/;
+width: 30%;
+height: 500px;
+left: 90%;
+top:100px;
+background: #ffd633; 
+color: #fff;
+border-style: outset;
+border-color: coral;
+border-width: 7px;
+margin: 0 0 0 -25%
+}
+#emailvalidation  {
+position: absolute; /*or fixed*/;
+width: 30%;
+height: 500px;
+left: 90%;
+top:100px;
+background: #ffd633; 
+color: #fff;
+border-style: outset;
+border-color: coral;
+border-width: 7px;
+margin: 0 0 0 -25%
+}
+#signup {
+position: absolute; /*or fixed*/;
+width: 30%;
+height: 500px;
+left: 90%;
+top:100px;
+background: #d2a679; 
+color: #fff;
+border-style: outset;
+border-color: coral;
+border-width: 7px;
+margin: 0 0 0 -25%
+}
+
+#resetpwd {
+position: absolute; /*or fixed*/;
+width: 30%;
+height: 500px;
+left: 90%;
+top:100px;
+background: #CBCDC8; 
+color: #fff;
+border-style: outset;
+border-color: coral;
+border-width: 7px;
+margin: 0 0 0 -25%
+}
+
+
+.button2 {
+  background-color: white; 
+  color: black; 
+  border: 2px solid #008CBA;
+}
+#perrorMessage{
+  width: 300px;
+  height: 40px;
+  background-color: red;
+  position: relative;
+  animation-name: example;
+  animation-duration: 4s;
+}
+#errorMessage {
+  width: 300px;
+  height: 40px;
+  background-color: red;
+  position: relative;
+  animation-name: example;
+  animation-duration: 4s;
+}
+
+#serrorMessage {
+  width: 300px;
+  height: 40px;
+  background-color: red;
+  position: relative;
+  animation-name: example;
+  animation-duration: 4s;
+}
+
+@keyframes example {
+  0%   {background-color:red; left:0px; top:-300px;}
+  25%  {background-color:yellow; left:200px; top:-300px;}
+  50%  {background-color:blue; left:200px; top:0px;}
+  75%  {background-color:green; left:0px; top:0px;}
+  100% {background-color:red; left:0px; top:-300px;}
+}
+
+ 
+
+</style>
+ 
+</head>
+<body width="100%" height="100%" style="background-color: #000033;"> 
+
+  
+		  
+
+<div class="container" id="login">
+    <h4 align="center">SIGN IN TO POOJA HEALTH</h4> 
+                
+                   <form action="/auth/login/" method="post" name="loginwithemail"> 
+               
+                   <div class='col-sm-14'>
+                    <div class="form-group">
+                        <label for="email"><h5>Login with Email (or) Mobile</h5></label>
+                        <input required="required"  type="email" class="form-control" id="email" name="email">
+                    </div>
+                    </div><br/>
+                    <div class='col-sm-14'>
+	                    <div class="form-group">
+	                        <label for="pwd">Password:</label>
+	                        <input required="required"  type="password" class="form-control" id="pwd" name="password">
+	                   		<a href="default.asp" target="_blank"> Forgotten Password?</a><a href="javascript:toogleReset();" > Reset Password?</a>
+	                    </div>
+                    </div>
+                    <br/>
+                      <div class='col-sm-14'>
+		                    <div class="form-group">
+		                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+		                   <button type="button" class="button button2" onClick="javascript:loginemail()">Login</button>
+		                   <a href="/oauth2/authorize/google"><img src="http://pngimg.com/uploads/google/google_PNG19635.png" style="height:60px"></a></p>
+		                     </div>
+                     </div>
+                </form> 
+          		
+       		  <div id="errorMessage" style="display: none" class="col-md-10"></div>
+       			<button  class="button button2"  onclick="toggleme('signup');toggleme('login')"> Create Account</button>
+            
+        
+
+</div>
+
+ 
+ 
+<div class="container" id="emailvalidation" style="display: none">
+    <h1>Please check your email to validate account.</h1>
+    <a href="javascript:backtoHome();" >Back</a>
+    </div>
+<div class="container" id="signup" style="display: none">
+    <h1>SignUp !</h1>
+    <div class="col-md-6">
+        
+        
+         
+            <div class="row">
+            <form id="newuserSingupForm" 
+             role="form"
+             class="form-horizontal" >  
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input required="required"   type="string" class="form-control" id="name" name="name">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email address:</label>
+                        <input required="required"   type="email" class="form-control" id="email" name="email">
+                    </div>
+                    <div class="form-group">
+                        <label for="pwd">Mobile Number:</label>
+                        <input required="required" pattern="[789][0-9]{9}"  type="text" class="form-control" id="pwd" name="mobilenumber">
+                    </div>
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                     
+                    <a href="javascript:newuserSingup();" >Signup</a>
+                      <div id="serrorMessage" style="display: none" class="col-md-10"></div>
+                </form>
+            </div>
+        </div>
+    
+</div>
+
+ 
+ 
+<div class="container" id="resetpwd" style="display: none">
+    <h1>Reset Password!</h1>
+    <div class="col-md-6"> 
+            <div class="row">
+            <form id="resetPasswordForm" 
+             role="form"
+             class="form-horizontal" >  
+                   <div class='col-sm-14'>
+                    <div class="form-group">
+                        <label for="email">Registered Email:</label>
+                        <input required="required"   type="email" class="form-control" id="email" name="email">
+                    </div>
+                    </div>
+                    <div class='col-sm-14'>
+	                    <div class="form-group">
+	                        <label for="pwd">Current Password:</label>
+	                        <input required="required"   type="password" class="form-control" id="cpwd" name="cpwd">
+	                   		 
+	                    </div>
+                    </div>
+                    
+                     <div class='col-sm-14'>
+	                    <div class="form-group">
+	                        <label for="pwd">New Password:</label>
+	                        <input type="password" class="form-control" id="npwd" name="npwd">
+	                   		 
+	                    </div>
+                    </div>
+                   <div id="perrorMessage" style="display: none" class="col-md-10"></div>
+                   <div class="container" id="psucessMessage" style="display: none">
+				    <h1>Reset Success!.</h1>
+				    <a href="javascript:backtoHome();" >Back</a>
+				    </div>
+                     
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                     <a href="javascript:resetPassword();" >Reset Password</a>
+                </form>
+            </div>
+        </div>
+    
+</div>
+<div th:fragment="redirecturl">
+<form id="redirecturlForm">
+ 	 
+    	 <input type="hidden" id="redirecturlvalue" th:name="redirecturlvalue" th:value="${redirecturl}"/>
+	 
+</form>
+</div>
+ 
+ 
+<div th:fragment="resetpassword" >
+<div id="resetpwd" style="display: none">
+  <h1>Reset Password Success!.</h1>
+    <a href="javascript:backtoHome();" >Back</a>
+</div>
+</div>
+
+</body>
+</html>
